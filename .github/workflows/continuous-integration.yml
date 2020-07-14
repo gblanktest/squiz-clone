@@ -35,5 +35,4 @@ jobs:
           script: |
             rm -rf squiz-clone
             git clone https://github.com/gblanktest/squiz-clone.git
-            cd squiz-clone
-            pip3 -i requirements.txt
+            pip3 install -r squiz-clone/requirements.txt
