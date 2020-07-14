@@ -1,4 +1,4 @@
-name: continuous integration
+name: CI/CD
 
 on:
   push:
@@ -21,3 +21,19 @@ jobs:
       - name: Run Tests
         run: |
           python -m unittest discover tests/
+  deployment:
+    needs: test_suite
+      runs-on: ubuntu-latest
+      steps:
+        - name: Fresh clone & repo install
+          uses: appleboy/ssh-action@master
+          with:
+            host: 54.90.42.99
+            username: github-actions
+            key: ${{ secrets.SSH_KEY }}
+            port: 22
+            script: |
+              rm -rf squiz-clone
+              git clone https://github.com/gblanktest/squiz-clone.git
+              cd squiz-clone
+              pip3 -i requirements.txt
